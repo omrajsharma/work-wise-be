@@ -12,7 +12,8 @@ const authRoutes = require('./routes/AuthRoutes');
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: ["https://work-wise.vercel.app/"]
+    credentials: true,
+    origin: ['https://work-wise.vercel.app']
 }));
 
 /**
