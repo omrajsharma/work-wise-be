@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const healthRoutes = require('./routes/HealthRoutes')
+const cors = require('cors');
+const healthRoutes = require('./routes/HealthRoutes');
+const authRoutes = require('./routes/AuthRoutes');
 
 
 /**
@@ -9,7 +11,9 @@ const healthRoutes = require('./routes/HealthRoutes')
  */
 const app = express();
 app.use(express.json());
-
+app.use(cors({
+    origin: ["https://work-wise.vercel.app/"]
+}));
 
 /**
  * DATABASE
@@ -23,6 +27,7 @@ mongoose.connection.on('error', err => console.log('🟥 error', err));
  * ROUTES
  */
 app.use('/health', healthRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 
 
