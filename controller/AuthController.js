@@ -96,4 +96,23 @@ const loginUser = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser };
+const getProfile = async (req, res) => {
+    const {token} = req.cookies;
+
+    if (!token) {
+        res.status(401).json({error: 'Not Authorized'});
+        return
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const user = await UserModel.findOne({_id: decoded.id});
+        const {_id, username} = user;
+        res.status(200).json({_id, username});
+    } catch (err) {
+        res.status(401).json({error: 'Not Authorized'});
+        return
+    }
+}
+
+module.exports = { registerUser, loginUser, getProfile };
