@@ -108,7 +108,13 @@ const getProfile = async (req, res) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const user = await UserModel.findOne({_id: decoded.id});
         const {_id, username} = user;
-        res.status(200).json({_id, username});
+        res.status(200)
+            .json({
+                data: {
+                    userId: _id, 
+                    username: username
+                }
+            });
     } catch (err) {
         res.status(401).json({error: 'Not Authorized'});
         return
