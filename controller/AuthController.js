@@ -121,4 +121,8 @@ const getProfile = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser, getProfile };
+const logoutUser = async (req, res) => {
+    res.clearCookie('token').status(200).json({success: "User Logout"});
+}
+
+module.exports = { registerUser, loginUser, getProfile, logoutUser };
